@@ -11,9 +11,10 @@ public:
 class LinkedList{
 private:
     int size;
-    Node* head;
-    Node* tail;
 public:
+	Node* head;
+	Node* tail;
+
     LinkedList(){size=0; head = NULL; tail=NULL;}
     LinkedList(int A[], int n);
     ~LinkedList();
@@ -23,8 +24,11 @@ public:
     void Insert(int data, int index);
     int getSize();
     int Delete(int index);
+	void Reverse();
+	int isLoop();
 
     void Display();
+	void RDisplay(Node* p);
 };
 
 LinkedList::LinkedList(int A[], int n){
@@ -57,6 +61,8 @@ LinkedList::~LinkedList(){
 int LinkedList::getSize(){
     return size;
 }
+
+
 void LinkedList::InsertFirst(int data){
     Node* newNode = new Node;
     newNode->data = data;
@@ -130,6 +136,34 @@ int LinkedList::Delete(int index){
     size--;
     return x;
 }
+
+int LinkedList::isLoop(){
+	Node *p,*q;
+	p=q=head;
+	do{
+		p=p->next;
+		q=q->next;
+		q=q?q->next:q;
+	}while(p && q && p!=q);
+	if(p==q)
+		return 1;
+	else
+		return 0;
+	
+}
+
+void LinkedList::Reverse(){
+	Node *p,*q = nullptr;
+	while(head != nullptr){
+		p = head;
+		head = head->next;
+		p->next = q;
+		q = p;
+	}
+	head = p;
+	p = q = nullptr;
+}
+
 void LinkedList::Display(){
     Node* node = head;
     while(node!=nullptr){
@@ -139,11 +173,16 @@ void LinkedList::Display(){
     cout<<endl;
 }
 
+
 int main(){
     int A[] = {1,2,3,4,5,6};
     int n = sizeof(A)/sizeof(A[0]);
     LinkedList l1(A,n);
-    l1.Insert(-767676, 5);
-    l1.Display();
+
+	Node *t1;
+	t1 = l1.head->next->next;
+	t1->next = l1.head;
+	cout<<l1.isLoop()<<endl;
+		
 }
 
