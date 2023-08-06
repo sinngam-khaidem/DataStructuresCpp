@@ -15,7 +15,6 @@ class Stack{
 		int isFull();
 		int isEmpty();
 		int peek(int index);
-
 };
 
 Stack::Stack(int size){
@@ -83,7 +82,7 @@ int main(){
 	stk.push(30);
 	stk.push(40);
 	stk.peek(0);
-		
+
 	stk.Display();
 
 }
